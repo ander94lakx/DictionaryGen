@@ -9,8 +9,9 @@ Output:
 """
 
 __author__ = 'Ander'
-__version__ = "3.1"
-__copyright__ = "(C) 2015 Aaron Swartz. GNU GPL 3."
+__version__ = "1.0"
+__copyright__ = "(C) 2015 Ander Granado. GNU GPL 3."
+
 import sys
 import re as regex
 import itertools
