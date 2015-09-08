@@ -9,7 +9,7 @@ Output:
 """
 
 __author__ = 'Ander'
-__version__ = '1.0.1'
+__version__ = '1.0.1.1'
 __copyright__ = '(C) 2015 Ander Granado. GNU GPL 3.'
 
 import sys
@@ -102,9 +102,6 @@ def dict_gen():
 
     if not args.file and not args.keywords:
         return
-
-    print('Deleting repeated words...')
-    delete_repeated_words(dictionary)
 
     # Sort the words and make a count of them
     dictionary.sort()
