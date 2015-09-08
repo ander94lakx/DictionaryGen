@@ -32,7 +32,6 @@ def delete_repeated_words(list):
                 del list[j]
             else:
                 j += 1
-    return list
 
 def _is_number(str):
     try:
@@ -85,7 +84,7 @@ def dict_gen():
                         dictionary.append(word)
         print('Done reading files.')
         print('Deleting repeated words...')
-        dictionary = delete_repeated_words(dictionary)
+        delete_repeated_words(dictionary)
 
     if args.keywords:
         for i in range(1,5):
@@ -100,7 +99,7 @@ def dict_gen():
         return
 
     print('Deleting repeated words...')
-    dictionary = delete_repeated_words(dictionary)
+    delete_repeated_words(dictionary)
 
     # Sort the words and make a count of them
     dictionary.sort()
