@@ -41,14 +41,19 @@ def _is_number(str):
     else:
         return True
 
-def upper_lower_combs(str):
+def upper_lower_combs(list):
     """Get all the upper an lower case letters combination of a word"""
-    if _is_number(str):
-        return [str]
-    else:
-        # http://stackoverflow.com/questions/11144389/
-        c = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in str)))
-        return c
+    combs = []
+    for word in list:
+        if _is_number(word):
+            combs.append(word)
+        else:
+            # http://stackoverflow.com/questions/11144389/
+            for elem in map(''.join, itertools.product(*((c.upper(), c.lower()) for c in word))):
+                combs.append(elem)
+    for elem in combs:
+        list.append(elem)
+
 
 def dict_gen():
     """Generate a dictionary from all the indicated files"""
@@ -105,10 +110,11 @@ def dict_gen():
     dictionary.sort()
     print('Number of words is:', str(len(dictionary)))
 
+    # Copy all the words in another list
+    dictionary_comb = list(dictionary)
+
     # Generate all the combinations an makes a count of it
-    for word in dictionary:
-        for elem in upper_lower_combs(word):
-            dictionary_comb.append(elem)
+    upper_lower_combs(dictionary_comb)
     print('Number of combinations is:', str(len(dictionary_comb)))
 
     # Write the results on the file
