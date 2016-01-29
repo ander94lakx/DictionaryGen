@@ -9,12 +9,16 @@ Output:
 """
 
 __author__ = 'Ander'
-__version__ = '1.0.1.2'
+__version__ = '1.0.2'
 __copyright__ = '(C) 2015 Ander Granado. GNU GPL 3.'
 
+import os
 import re as regex
 import itertools
 import argparse
+
+words_filename = "words.txt"
+combs_filename = "combinations.txt"
 
 def delete_HTML(str):
     """Delete the HTML code from a string"""
@@ -63,9 +67,13 @@ def dict_gen():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', nargs='+' ,help='Name of the files to take the words')
     parser.add_argument('-k', '--keywords', nargs='+', help='Keywords to generate the dictionary')
+    parser.add_argument('-af', '--file_all', nargs='+' ,help='Name of the files to take the words (Case sensitive mode)')
+    parser.add_argument('-ak', '--keywords_all', nargs='+', help='Keywords to generate the dictionary (Case sensitive mode)')
     args = parser.parse_args()
 
-    if args.file:
+    if args.file or args.file_all:
+        if args.file_all:
+            args.file = args.file_all
         print('Reading files...')
         for arg in args.file:
             with open(arg, 'r') as file:
@@ -90,7 +98,9 @@ def dict_gen():
         print('Deleting repeated words...')
         delete_repeated_words(dictionary)
 
-    if args.keywords:
+    if args.keywords or args.keywords_all:
+        if args.keywords_all:
+            args.keywords = args.keywords_all
         for i in range(1,5):
             words_comb = itertools.permutations(args.keywords, i)
             for word_list in words_comb:
@@ -99,7 +109,7 @@ def dict_gen():
                     word_str = word_str + word
                 dictionary.append(word_str)
 
-    if not args.file and not args.keywords:
+    if not args.file and not args.keywords and not args.file_all and not args.keywords_all:
         return
 
     # Sort the words and make a count of them
@@ -110,17 +120,26 @@ def dict_gen():
     dictionary_comb = list(dictionary)
 
     # Generate all the combinations an makes a count of it
-    upper_lower_combs(dictionary_comb)
-    print('Number of combinations is:', str(len(dictionary_comb)))
+    if args.file_all or args.keywords_all:
+        upper_lower_combs(dictionary_comb)
+        print('Number of upper/lower case combinations is:', str(len(dictionary_comb)))
 
     # Write the results on the file
+    if os.path.isfile(combs_filename):
+        os.remove(combs_filename)
+    if os.path.isfile(words_filename):
+        os.remove(words_filename)
+
     print('Writing in files...')
-    with open("words.txt", 'w') as file:
+    with open(words_filename, 'w') as file:
         for word in dictionary:
             file.write(word + '\n')
-    with open("combinations.txt", 'w') as file:
-        for word in dictionary_comb:
-            file.write(word + '\n')
+
+    if args.file_all or args.keywords_all:
+        with open(combs_filename, 'w') as file:
+            for word in dictionary_comb:
+                file.write(word + '\n')
+
     print('Done writing.')
 
 if __name__ == "__main__":
