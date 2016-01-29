@@ -1,0 +1,7 @@
+/.idea/
+/__pycache__/
+combinations.txt
+words.txt
+TEST_HTML.html
+TEST_TXT.txt
+tests.py

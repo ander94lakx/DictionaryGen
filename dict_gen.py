@@ -9,10 +9,9 @@ Output:
 """
 
 __author__ = 'Ander'
-__version__ = '1.0.1.1'
+__version__ = '1.0.1.2'
 __copyright__ = '(C) 2015 Ander Granado. GNU GPL 3.'
 
-import sys
 import re as regex
 import itertools
 import argparse
@@ -57,7 +56,7 @@ def upper_lower_combs(list):
 
 def dict_gen():
     """Generate a dictionary from all the indicated files"""
-    # Create all the necesary variables
+    # Create all the necessary variables
     dictionary = []
     dictionary_comb = []
 
@@ -72,7 +71,7 @@ def dict_gen():
             with open(arg, 'r') as file:
                 print('\t... reading file: "' + arg + '"')
                 if '.txt' in arg:
-                    # Convert the file into a single string whitout line endings
+                    # Convert the file into a single string without line endings
                     # http://stackoverflow.com/questions/8369219/
                     data_str = file.read().replace('\n', ' ')
 
@@ -93,7 +92,7 @@ def dict_gen():
 
     if args.keywords:
         for i in range(1,5):
-            words_comb = itertools.permutations(args.keywords, i);
+            words_comb = itertools.permutations(args.keywords, i)
             for word_list in words_comb:
                 word_str = ''
                 for word in word_list:
